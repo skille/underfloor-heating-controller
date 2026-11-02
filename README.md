@@ -1,6 +1,17 @@
 # floor-heating-controller
-esphome firmware for [esp32_8ch_motor_shield](https://github.com/nliaudat/esp32_8ch_motor_shield/)
+Custom ESPHome firmware for [esp32_8ch_motor_shield](https://github.com/nliaudat/esp32_8ch_motor_shield/)
 
+This repository is a custom working copy based on the upstream project by nliaudat:
+https://github.com/nliaudat/floor-heating-controller
+
+It contains local customizations for this specific installation, including:
+- remote-controlled valve operation via Home Assistant / Versatile Thermostat
+- `zone_1`...`zone_8` naming
+- `valve_position_N` setpoints for HA control
+- fleet-shared ESPHome API + OTA credentials via Docker env vars
+- local board setup for a multi-board installation
+
+Original upstream project credit remains with nliaudat and the contributors there.
 
 #install esphome
 ```
