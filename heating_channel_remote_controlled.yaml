@@ -4,6 +4,7 @@ climate:
   - platform: thermostat
     id: ${id}_thermostat
     name: ${frendly_name}
+    internal: true
     sensor: ${temperature_sensor}
     default_preset: ${default_preset}
     on_boot_restore_from: memory
