@@ -75,9 +75,10 @@ number:
     unit_of_measurement: "%"
     id: valve_position_${channel_number}
     set_action:
-      - cover.set_position:
-          id: CH${channel_number}_cover
-          position: !lambda "return x / 100.0;"
+      - lambda: |-
+          auto call = id(CH${channel_number}_cover).make_call();
+          call.set_position(x / 100.0f);
+          call.perform();
 
   - platform: template
     name: "bemf_trigger_${channel_number}"
