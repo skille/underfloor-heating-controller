@@ -19,7 +19,7 @@ substitutions:
   revision: "1.123"
     
   #time
-  TZ: "Europe/Zurich" #timezone
+  TZ: "Europe/Oslo" #timezone
   reboot_days_of_week: "MON"
   reboot_hours: "5"
   reboot_minutes: "0"
@@ -31,8 +31,7 @@ substitutions:
   dallasaddress_output: "0xeb0000008492ad28"
   
   adc_zero_calibration: "-0.075" #typical : -0.075 for esp32 devkit, 0.005 for esp32-c3. + motor eventual specific inpedance
-  pump_mac_address: "AA:BB:CC:DD:EE:FF"
-  
+
 web_server:
   port: 80
   version: 3
@@ -61,19 +60,12 @@ web_server:
 # Enable HOME Assistant API
 api:
   reboot_timeout: 30min
+  encryption:
+    key: !env_var ESPHOME_API_ENCRYPTION_KEY
 
   
 ############## Channels definition (packages as template : https://espHOME.io/guides/configuration-types.html#packages-as-templates)
 packages:
-##### Sample Pump controll via ESP Now
-
-  pump_control: !include
-      file: pump_control.yaml
-      vars:
-        pump_mac_address: ${pump_mac_address}
-        circulation_check_interval: "24h"
-        circulation_run_duration: "5min"
-
 ##### Sample PID config
   # channel_1: !include
     # file: heating_channel_PID.yaml
@@ -196,11 +188,11 @@ packages:
 
 #### normal channel config
   channel_1: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 1
-      id: wc
-      frendly_name: wc
+      id: zone_1
+      frendly_name: zone_1
       temperature_sensor: corridor_temperature_sensor #must match one sensor defined in sensor_temperature.yaml
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -231,11 +223,11 @@ packages:
       
 
   channel_2: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 2
-      id: storage
-      frendly_name: storage
+      id: zone_2
+      frendly_name: zone_2
       temperature_sensor: reduit_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -265,11 +257,11 @@ packages:
 
       
   channel_3: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 3
-      id: living
-      frendly_name: living
+      id: zone_3
+      frendly_name: zone_3
       temperature_sensor: living_room_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -298,11 +290,11 @@ packages:
       
       
   channel_4: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 4
-      id: dining
-      frendly_name: dining
+      id: zone_4
+      frendly_name: zone_4
       temperature_sensor: living_room_temperature_sensor #indoor_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -331,11 +323,11 @@ packages:
         
  
   channel_5: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 5
-      id: kitchen
-      frendly_name: kitchen
+      id: zone_5
+      frendly_name: zone_5
       temperature_sensor: living_room_temperature_sensor
       # default_target_temperature_low: "21 °C"
       # pid_kp: "0.06"
@@ -372,11 +364,11 @@ packages:
       
       
   channel_6: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 6
-      id: office
-      frendly_name: office
+      id: zone_6
+      frendly_name: zone_6
       temperature_sensor: office_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -405,11 +397,11 @@ packages:
       
       
   channel_7: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 7
-      id: bedroom
-      frendly_name: bedroom
+      id: zone_7
+      frendly_name: zone_7
       temperature_sensor: bedroom_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY
@@ -438,11 +430,11 @@ packages:
          
       
   channel_8: !include
-    file: heating_channel_tanh.yaml
+    file: heating_channel_remote_controlled.yaml
     vars:
       channel_number: 8
-      id: bathroom
-      frendly_name: bathroom
+      id: zone_8
+      frendly_name: zone_8
       temperature_sensor: bathroom_temperature_sensor
       default_preset: HOME
       preset_1_name: HOME #ECO, AWAY, BOOST, COMFORT, HOME, SLEEP, ACTIVITY

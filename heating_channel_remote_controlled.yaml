@@ -65,6 +65,21 @@ cover:
     
 number:
   - platform: template
+    name: "valve_position_${channel_number}"
+    optimistic: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    restore_value: true
+    initial_value: 0
+    unit_of_measurement: "%"
+    id: valve_position_${channel_number}
+    set_action:
+      - cover.set_position:
+          id: CH${channel_number}_cover
+          position: !lambda "return x / 100.0;"
+
+  - platform: template
     name: "bemf_trigger_${channel_number}"
     optimistic: true
     min_value: 0.005

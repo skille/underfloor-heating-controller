@@ -50,6 +50,7 @@ preferences:
 
 ota:
   - platform: esphome
+    password: !env_var ESPHOME_OTA_PASSWORD
 
 safe_mode:
 
